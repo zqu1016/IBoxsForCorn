@@ -53,7 +53,7 @@ namespace IBoxs.Sdk.Cqp
         /// <returns></returns>
         public string SendPrivateMessage(long RobotQQ, long qqId, string message, long Type, uint Bubble)
         {
-            string c =SendMsg.SendPrivateMessage(pKey, ApiData, RobotQQ, qqId, message, Type, Bubble);
+            string c = SendMsg.SendPrivateMessage(pKey, ApiData, RobotQQ, qqId, message, Type, Bubble);
             return c;
         }
         /// <summary>
@@ -66,7 +66,7 @@ namespace IBoxs.Sdk.Cqp
         /// <param name="Type"></param>
         /// <param name="Bubble"></param>
         /// <returns></returns>
-        public string SendGroupPrivateMessage(long RobotQQ,long groupId, long qqId, string message, long Type, uint Bubble)
+        public string SendGroupPrivateMessage(long RobotQQ, long groupId, long qqId, string message, long Type, uint Bubble)
         {
             string c = SendMsg.SendGroupPrivateMessage(pKey, ApiData, RobotQQ, groupId, qqId, message, Type, Bubble);
             return c;
@@ -99,10 +99,54 @@ namespace IBoxs.Sdk.Cqp
         /// <param name="groupId"></param>
         /// <param name="Card"></param>
         /// <returns></returns>
-        public string SetGroupMemberCard(long RobotQQ, long groupId,long qqId, string Card)
+        public string SetGroupMemberCard(long RobotQQ, long groupId, long qqId, string Card)
         {
-            string c = GroupHandle.setGroupMemberCard(pKey, ApiData, RobotQQ, groupId,qqId,Card);
+            string c = GroupHandle.setGroupMemberCard(pKey, ApiData, RobotQQ, groupId, qqId, Card);
             return c;
+        }
+
+
+        /// <summary>
+        /// 取框架QQ
+        /// </summary>
+        /// <returns></returns>
+        public string GetLoginQQ()
+        {
+            string ret = Config.getCornQQ(pKey, ApiData);
+            return ret;
+        }
+
+        /// <summary>
+        /// 获取QQ昵称
+        /// </summary>
+        /// <param name="robotQQ"></param>
+        /// <param name="qqId"></param>
+        /// <param name="Cache">是否优先使用缓存</param>
+        /// <returns></returns>
+        public string GetQQNick(long robotQQ, long qqId, bool Cache=false)
+        {
+            string nick = string.Empty;
+            if (Cache)
+            {
+                nick = FriendHandle.GetQQNickCache(pKey, ApiData, qqId).Trim();
+                if (nick.Length < 1)
+                    nick = string.Empty;
+            }
+            if (nick == string.Empty)
+            {
+                nick = FriendHandle.GetQQNick(pKey, ApiData, robotQQ, qqId);
+            }
+            return nick;
+        }
+        /// <summary>
+        /// 获取好友列表
+        /// </summary>
+        /// <param name="robotQQ"></param>
+        /// <returns></returns>
+        public string GetFriendList(long robotQQ)
+        {
+            string list = FriendHandle.GetFriendList(pKey, ApiData, robotQQ);
+            return list;
         }
     }
 }
