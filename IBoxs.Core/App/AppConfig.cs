@@ -42,6 +42,12 @@ namespace IBoxs.Core.App
             json = appInfo.SetPermission(1, "发送好友消息", json);
             json = appInfo.SetPermission(3, "发送群临时消息", json);
             json = appInfo.SetPermission(4, "添加好友", json);
+            json = appInfo.SetPermission(26, "取群列表", json);
+            json = appInfo.SetPermission(27, "取群成员列表", json);
+            json = appInfo.SetPermission(19, "取昵称_从缓存", json);
+            json = appInfo.SetPermission(20, "强制取昵称", json);
+            json = appInfo.SetPermission(25, "取好友列表", json);
+            json = appInfo.SetPermission(24, "取框架QQ", json);
             /*    json = appInfo.SetPermission(2, "发送群消息", json);
                 
                 

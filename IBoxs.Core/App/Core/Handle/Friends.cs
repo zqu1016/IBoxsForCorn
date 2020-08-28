@@ -18,18 +18,16 @@ namespace IBoxs.Core.App.Core.Handle
         {
             PrivateMessageEvent data = new PrivateMessageEvent();
             data = (PrivateMessageEvent)Marshal.PtrToStructure(intPtr, typeof(PrivateMessageEvent));
-
-            string msg = data.MessageType.ToString() + "|" + data.MessageSubType.ToString() + "|" + data.MessageSubTemporaryType.ToString();
-            Common.CqApi.SendPrivateMessage(data.robotQQ, data.FromQQ, msg, 0, 0);
+            
             if (data.MessageType == Sdk.Cqp.Enum.MsgType.MessageType.GroupTemp)
-            {
-                CqPrivateMessageEventArgs e = new CqPrivateMessageEventArgs(data);
-                Event.Event_Private.RecivesFriendMsg(e);
-            }
-            else
             {
                 CqGroupPrivateMessageEventArgs e = new CqGroupPrivateMessageEventArgs(data);
                 Event.Event_Group.ReciveGroupPrivateMsg(e);
+            }
+            else
+            {
+                CqPrivateMessageEventArgs e = new CqPrivateMessageEventArgs(data);
+                Event.Event_Private.RecivesFriendMsg(e);
             }
             return 1;
         }

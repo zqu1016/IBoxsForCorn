@@ -6,9 +6,10 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using IBoxs.Sdk.Cqp.Model;
 using IBoxs.Sdk.Cqp.Core.Message;
+using IBoxs. Sdk.Cqp.Expand;
+using System.Windows.Forms;
 
 namespace IBoxs.Sdk.Cqp
 {
@@ -19,6 +20,7 @@ namespace IBoxs.Sdk.Cqp
     {
         #region --字段--
         private readonly string _pKey = null;
+        private readonly Encoding _defaultEncoding = null;
         private readonly string _ApiData = null;
         #endregion
 
@@ -38,6 +40,7 @@ namespace IBoxs.Sdk.Cqp
         public CqApi(string pKey, string ApiData)
         {
             this._pKey = pKey;
+            this._defaultEncoding = Encoding.GetEncoding("GB18030");
             this._ApiData = ApiData;
         }
         #endregion
@@ -139,14 +142,67 @@ namespace IBoxs.Sdk.Cqp
             return nick;
         }
         /// <summary>
+        /// 获取群列表
+        /// </summary>
+        /// <param name="robotQQ"></param>
+        /// <returns></returns>
+        public List<GroupInfo> GetGroupList(long robotQQ)
+        {
+            List<GroupInfo> result = GroupHandle.Getgrouplist(pKey, ApiData, robotQQ);
+            return result;
+        }
+
+        /// <summary>
         /// 获取好友列表
         /// </summary>
         /// <param name="robotQQ"></param>
         /// <returns></returns>
         public string GetFriendList(long robotQQ)
         {
-            string list = FriendHandle.GetFriendList(pKey, ApiData, robotQQ);
-            return list;
+            try
+            {
+                string result = (FriendHandle.GetFriendList(pKey, ApiData, robotQQ))[0].Card;
+                MessageBox.Show(result);
+            }
+            catch(Exception ex) { MessageBox.Show(ex.ToString()); }
+            /* if (string.IsNullOrEmpty(result))
+             {
+                 return null;
+             }
+             MessageBox.Show(result);
+             using (BinaryReader reader = new BinaryReader(new MemoryStream(Convert.FromBase64String(result))))
+             {
+                 if (reader.Length() < 4)
+                 {
+                     return null;
+                 }
+
+                 List<FriendInfo> friends = new List<FriendInfo>();
+                 for (int i = 0, len = reader.ReadInt32_Ex(); i < len; i++)
+                 {
+                     FriendInfo temp = new FriendInfo();
+                     if (reader.Length() <= 0)
+                     {
+                         return null;
+                     }
+
+                     using (BinaryReader tempReader = new BinaryReader(new MemoryStream(reader.ReadToken_Ex())))
+                     {
+                         if (tempReader.Length() < 12)
+                         {
+                             return null;
+                         }
+
+                         temp.Id = tempReader.ReadInt64_Ex();
+                         temp.Nick = tempReader.ReadString_Ex(_defaultEncoding);
+                         temp.Card = tempReader.ReadString_Ex(_defaultEncoding);
+                     }
+
+                     friends.Add(temp);
+                 }
+                 return friends;
+             }*/
+            return "112";
         }
     }
 }

@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cqp\Core\Kernel32.cs" />
     <Compile Include="Cqp\Core\Message\FriendHandle.cs" />
     <Compile Include="Cqp\Core\Message\GroupHandle.cs" />
     <Compile Include="Cqp\Core\Message\SendMsg.cs" />
@@ -65,6 +66,11 @@
     <Compile Include="Cqp\EventArgs\CqGroupPrivateMessageEventArgs.cs" />
     <Compile Include="Cqp\EventArgs\CqPrivateMessageEventArgs.cs" />
     <Compile Include="Cqp\EventArgs\CqQQStuatsChangeEventArgs.cs" />
+    <Compile Include="Cqp\Expand\BinaryReaderExpand.cs" />
+    <Compile Include="Cqp\Expand\BinaryWriterExpand.cs" />
+    <Compile Include="Cqp\Expand\SystemExpand.cs" />
+    <Compile Include="Cqp\Model\FriendInfo.cs" />
+    <Compile Include="Cqp\Model\GroupInfo.cs" />
     <Compile Include="Cqp\Model\QQInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
